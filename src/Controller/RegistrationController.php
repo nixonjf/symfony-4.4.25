@@ -11,12 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class RegistrationController extends Controller {
+class RegistrationController extends Controller
+{
 
     /**
      * @Route("/register", name="user_registration")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
         // 1) build the form
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -41,8 +43,8 @@ class RegistrationController extends Controller {
         }
 
         return $this->render(
-                        'security/register.html.twig', array('form' => $form->createView())
+            'security/register.html.twig',
+            array('form' => $form->createView())
         );
     }
-
 }

@@ -11,9 +11,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
- * @UniqueEntity(fields="email", message="Email already taken") 
+ * @UniqueEntity(fields="email", message="Email already taken")
  */
-class User implements UserInterface {
+class User implements UserInterface
+{
 
     /**
      * @ORM\Id
@@ -59,21 +60,25 @@ class User implements UserInterface {
      */
     private $apiKey;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->roles = array('ROLE_USER');
     }
 
     // other properties and methods
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->email;
     }
 
@@ -81,38 +86,44 @@ class User implements UserInterface {
 //        $this->username = $username;
 //    }
 
-    public function getPlainPassword() {
+    public function getPlainPassword()
+    {
         return $this->plainPassword;
     }
 
-    public function setPlainPassword($password) {
+    public function setPlainPassword($password)
+    {
         $this->plainPassword = $password;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
     }
 
-    public function getSalt() {
+    public function getSalt()
+    {
         // The bcrypt and argon2i algorithms don't require a separate salt.
         // You *may* need a real salt if you choose a different encoder.
         return null;
     }
 
-    public function getRoles() {
+    public function getRoles()
+    {
         return $this->roles;
     }
 
-    public function eraseCredentials() {
-        
+    public function eraseCredentials()
+    {
     }
 
-    public function getApiKey() {
+    public function getApiKey()
+    {
         return $this->apiKey;
     }
-
 }

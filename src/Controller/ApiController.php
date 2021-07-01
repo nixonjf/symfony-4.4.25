@@ -9,14 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class ApiController extends AbstractController {
-
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder) {
+class ApiController extends AbstractController
+{
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function login(Request $request): Response {
-
+    public function login(Request $request): Response
+    {
         $email = 'lkl@dd.ccc';
         $password = 'lkl@dd.ccc';
 
@@ -37,5 +38,4 @@ class ApiController extends AbstractController {
 
         return JsonResponse::create(['data' => ['apiKey' => $user->getApiKey()], 'status' => 'Success'], 200, [], true);
     }
-
 }

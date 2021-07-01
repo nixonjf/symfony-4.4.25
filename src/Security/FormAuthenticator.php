@@ -19,8 +19,8 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class FormAuthenticator extends AbstractFormLoginAuthenticator {
-
+class FormAuthenticator extends AbstractFormLoginAuthenticator
+{
     use TargetPathTrait;
 
     public
@@ -31,18 +31,21 @@ class FormAuthenticator extends AbstractFormLoginAuthenticator {
     private $urlGenerator;
     private $csrfTokenManager;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder) {
+    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function supports(Request $request) {
+    public function supports(Request $request)
+    {
         return self::LOGIN_ROUTE === $request->attributes->get('_route') && $request->isMethod('POST');
     }
 
-    public function getCredentials(Request $request) {
+    public function getCredentials(Request $request)
+    {
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
@@ -50,13 +53,15 @@ class FormAuthenticator extends AbstractFormLoginAuthenticator {
         ];
 
         $request->getSession()->set(
-                Security::LAST_USERNAME, $credentials['email']
+            Security::LAST_USERNAME,
+            $credentials['email']
         );
 
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider) {
+    public function getUser($credentials, UserProviderInterface $userProvider)
+    {
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
@@ -71,14 +76,15 @@ class FormAuthenticator extends AbstractFormLoginAuthenticator {
         return $user;
     }
 
-    public function checkCredentials($credentials, UserInterface $user) {
+    public function checkCredentials($credentials, UserInterface $user)
+    {
 //        dump($credentials);
 //        $user = $this->entityManager->getRepository(User::class)->findOneBy(
 //                [
 //                    'email' => $credentials['email'],
 //                    'password' => $credentials['password']
 //        ]);
-//        
+//
 //          dump($user); die;
 
 
@@ -96,7 +102,8 @@ class FormAuthenticator extends AbstractFormLoginAuthenticator {
         throw new \Exception('TODO: check the credentials inside ' . __FILE__);
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey) {
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
@@ -105,8 +112,8 @@ class FormAuthenticator extends AbstractFormLoginAuthenticator {
         throw new \Exception('TODO: provide a valid redirect inside ' . __FILE__);
     }
 
-    protected function getLoginUrl() {
+    protected function getLoginUrl()
+    {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
-
 }
