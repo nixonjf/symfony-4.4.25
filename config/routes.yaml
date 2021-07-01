@@ -1,0 +1,16 @@
+index:
+    path: /
+    controller: App\Controller\indexController::index
+login:
+    path: /login
+    controller: App\Controller\indexController::login
+api_login:
+    path: /api/login
+    controller: App\Controller\ApiController::login
+
+api_test:
+    path: /api/test
+    controller: App\Controller\ApiController::test    
+
+    
+    
